@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import InfoBox from './Components/InfoBox';
+import * as R from 'ramda';
 
 function App() {
+  let [data, setData] = useState([]);
+  
+  useEffect(() => {
+    const initialJson = require('./dataForApp.json').room;
+    setData(initialJson);
+  }, [])
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {R.map(info => <InfoBox data={info} key={data.indexOf(info)}/>, data)}
     </div>
   );
 }
